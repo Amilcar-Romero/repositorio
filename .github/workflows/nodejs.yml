@@ -1,0 +1,62 @@
+# Nombre del Flujo de Trabajo: Este nombre describe el propósito general del flujo de trabajo.
+name: Angular CRUD CI
+
+# Evento Desencadenante: El flujo de trabajo se ejecutará cada vez que se realice un "push" en el repositorio de GitHub.
+on: [push]
+
+# Trabajo "build": Este trabajo realiza varias tareas relacionadas con la construcción y prueba de una aplicación Angular en diferentes entornos.
+
+jobs:
+  build:
+    # El trabajo se ejecuta en una máquina virtual basada en Ubuntu.
+    runs-on: ubuntu-latest
+
+    # Estrategia de ejecución: Define la matriz de versiones de Node.js y aplicaciones a utilizar en los pasos siguientes.
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [14, 16]  # Versiones de Node.js
+        app:
+          - demo
+          - demo-bootstrap
+          - demo-material  # Aplicaciones de demostración
+
+    # Pasos del trabajo:
+    steps:
+      - uses: actions/checkout@v3  # Paso 1: Clona el repositorio.
+      
+      - name: Use Node.js ${{ matrix.node-version }}  # Paso 2: Configura la versión de Node.js.
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install latest Chrome  # Paso 3: Instala la última versión de Google Chrome.
+        run: |
+          sudo apt update
+          sudo apt --only-upgrade install google-chrome-stable
+          google-chrome --version
+      
+      - name: npm install, build, and test  # Paso 4: Instala dependencias, compila y ejecuta pruebas.
+        run: |
+          npm ci
+          npm run build --if-present
+          npm test
+          npm run coverage
+        working-directory: ./angular-crud
+
+      - name: package angular-crud  # Paso 5: Empaqueta la aplicación Angular.
+        run: npm pack
+        working-directory: ./angular-crud
+
+      - name: generate CRUD and run tests  # Paso 6: Genera código CRUD y ejecuta pruebas adicionales.
+        run: |
+          npm i -g @angular/cli
+          npm i
+          npm i --no-save ../angular-crud/*.tgz
+          mkdir -p src/app/hotel
+          mv model.json src/app/hotel/.
+          ng g angular-crud:crud-module hotel
+          xvfb-run npm test -- --watch=false
+        working-directory: ./${{ matrix.app }}
+        env:
+          CI: true

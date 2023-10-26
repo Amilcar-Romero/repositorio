@@ -1,0 +1,70 @@
+<!-- Navegación de "migas de pan" para indicar la ubicación del usuario -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+    <li class="breadcrumb-item active">Vuelos</li>
+  </ol>
+</nav>
+
+<!-- Contenedor de la tarjeta principal -->
+<div class="card">
+  <div class="header">
+    <h2 class="title">Listas de Vuelos</h2> <!-- Título de la tarjeta -->
+  </div>
+  <div class="content">
+    <form #f="ngForm"> <!-- Formulario con referencia "f" -->
+      <!-- Campo "Desde" -->
+      <div class="form-group">
+        <label for="from">Desde:</label>
+        <input [(ngModel)]="filter.from" id="from" name="from" class="form-control">
+      </div>
+
+      <!-- Campo "A" -->
+      <div class="form-group">
+        <label for="to">A:</label>
+        <input [(ngModel)]="filter.to" id="to" name="to" class="form-control">
+      </div>
+
+      <!-- Botón de búsqueda, deshabilitado si el formulario no es válido -->
+      <button (click)="search()" [disabled]="!f?.valid" class="btn btn-primary">Buscar</button>
+      
+      <!-- Enlace para crear un nuevo vuelo -->
+      <a [routerLink]="['../flights', 'new' ]" class="btn btn-default ml-2">Nuevo</a>
+    </form>
+  </div>
+</div>
+
+<!-- Contenedor de la lista de vuelos (se muestra si la lista no está vacía) -->
+<div class="card" *ngIf="flightList.length > 0">
+  <!-- Mensaje de retroalimentación -->
+  <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+  <div class="table-responsive">
+    <table class="table table-centered table-hover mt-2" id="datatable"> <!-- Tabla para la lista de vuelos -->
+      <thead>
+        <tr>
+          <th class="border-top-0" scope="col">Id</th>
+          <th class="border-top-0" scope="col">Desde </th>
+          <th class="border-top-0" scope="col">Hasta</th>
+          <th class="border-top-0" scope="col">Fecha</th>
+          <th class="border-top-0" scope="col" style="width:120px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iteración sobre la lista de vuelos -->
+        <tr *ngFor="let item of flightList" [class.active]="item === selectedFlight">
+          <td>{{item.id}}</td>
+          <td>{{item.from}}</td>
+          <td>{{item.to}}</td>
+          <td>{{item.date | date}}</td>
+          <td style="white-space: nowrap">
+            <!-- Enlace para editar un vuelo -->
+            <a [routerLink]="['../flights', item.id ]" class="btn btn-secondary">Editar</a>&nbsp;
+            <!-- Botón para eliminar un vuelo -->
+            <button (click)="delete(item)" class="btn btn-danger">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

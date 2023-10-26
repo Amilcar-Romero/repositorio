@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="home.component.css">
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1 class="title"> BIENVENIDO {{userName}}</h1>
+        </div>
+        <div class="content">
+
+            <div *ngIf="needsLogin" class="alert alert-warning">
+                You have been redirected to this page because you don't have the necessary
+                rights for the requested action. Login with a respective user account!
+            </div>
+            <button (click)="register()" class="btn btn-default">Registrate</button>
+            <button (click)="login()" class="btn btn-default">ingresar</button>
+            
+
+            <!-- Agrega aquí el tabbed-pane si lo necesitas -->
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# Comentario: Inicio de la sección de actualizaciones.
+updates:
+
+  # Comentario: Inicio de la primera actualización dirigida al ecosistema "github-actions".
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+
+  # Comentario: Inicio de la segunda actualización dirigida al ecosistema "npm".
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"

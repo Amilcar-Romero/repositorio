@@ -1,0 +1,68 @@
+.card {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header {
+  background-color: #007BFF;
+  color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 10px;
+  font-size: 24px;
+}
+
+.title {
+  margin: 0;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.alert {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 10px;
+  color: #721c24;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-default {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.btn-default:hover {
+  background-color: #0056b3;
+}
+
+/* Agrega estilos personalizados para el tabbed-pane si lo necesitas */
+/*
+.tabbed-pane {
+  // Estilos para el contenedor del tabbed-pane
+}
+
+.tab {
+  // Estilos para cada pestaña
+}
+
+.tab.active {
+  // Estilos para la pestaña activa
+}
+*/
+
+/* Agrega más estilos según tus necesidades */
